@@ -37,8 +37,8 @@ if (parser = parser[{$language|js}])
 		parserfile: parser.file,
 		stylesheet: parser.css,
 		path: {~|js} + 'codemirror/js/',
-		continuousScanning: 500,
 		autoMatchParens: true,
+		indentUnit: 4,
 		tabMode: 'shift'
 	});
 }

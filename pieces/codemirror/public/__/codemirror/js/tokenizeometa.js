@@ -42,12 +42,13 @@ var tokenizeJavaScript = (function() {
       "var": result("var", "keyword"), "function": result("function", "keyword"), "catch": result("catch", "keyword"),
       "for": result("for", "keyword"), "switch": result("switch", "keyword"),
       "case": result("case", "keyword"), "default": result("default", "keyword"),
-      "true": atom, "false": atom, "null": atom, "undefined": atom, "NaN": atom, "Infinity": atom
+      "true": atom, "false": atom, "null": atom, "undefined": atom, "NaN": atom, "Infinity": atom,
+      "ometa": keywordB
     };
   }();
 
   // Some helper regexps
-  var isOperatorChar = /[+\-*&%=<>!?|]/;
+  var isOperatorChar = /[+\-*&%=<>!?|~]/;
   var isHexDigit = /[0-9A-Fa-f]/;
   var isWordChar = /[\w\$_]/;
 
@@ -125,6 +126,24 @@ var tokenizeJavaScript = (function() {
       setInside(newInside);
       return {type: "comment", style: "js-comment"};
     }
+    function readMultilineString(start, quotes) {
+      var newInside = quotes;
+      var quote = quotes.charAt(0);
+      var maybeEnd = (start == quote);
+      while (true) {
+        if (source.endOfLine())
+          break;
+        var next = source.next();
+        if (next == quote && source.peek() == quote && maybeEnd) {
+          source.next();
+          newInside = null;
+          break;
+        }
+        maybeEnd = (next == quote);
+      }
+      setInside(newInside);
+      return {type: "multilineString", style: "js-string"};
+    }
     function readOperator() {
       source.nextWhileMatches(isOperatorChar);
       return {type: "operator", style: "js-operator"};
@@ -134,6 +153,14 @@ var tokenizeJavaScript = (function() {
       setInside(endBackSlash ? quote : null);
       return {type: "string", style: "js-string"};
     }
+    function readOmetaIdentifierString() {
+      source.nextWhileMatches(isWordChar);
+      return {type: "string", style: "js-string"};
+    }
+    function readOmetaBinding() {
+      source.nextWhileMatches(isWordChar);
+      return {type: "variable", style: "ometa-binding"};
+    }
 
     // Fetch the next token. Dispatches on first character in the
     // stream, or first two characters when the first is a slash.
@@ -142,8 +169,16 @@ var tokenizeJavaScript = (function() {
     var ch = source.next();
     if (inside == "/*")
       return readMultilineComment(ch);
+    if (inside == '"""' || inside == "'''")
+      return readMultilineString(ch, inside);
+    if (ch == '"' && source.lookAhead('""', true) || ch == "'" && source.lookAhead("''", true))
+      return readMultilineString('-', ch+ch+ch); // work as far as '-' is not '"' nor "'"
     else if (ch == "\"" || ch == "'")
       return readString(ch);
+    else if (ch == "`" || ch == "#" )
+      return readOmetaIdentifierString();
+    else if (ch == ':' && isWordChar.test(source.peek())) 
+      return readOmetaBinding();
     // with punctuation, the type of the token is the symbol itself
     else if (/[\[\]{}\(\),;\:\.]/.test(ch))
       return {type: ch, style: "js-punctuation"};
