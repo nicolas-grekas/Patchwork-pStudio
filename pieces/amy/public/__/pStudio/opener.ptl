@@ -1,7 +1,7 @@
 <!-- SET $a --><!-- INLINE pStudio/opener --><!-- END:SET -->
 {$a|replace:'\x3Ctextarea':'\x3Ctextarea -amy-enabled="true"'}
 
-<script type="text/javascript">
+<script>
 
 // theme: any from Amy Editor (Black, Cobalt, Concept, LAZY, default, Monokai, SlushAndPoppies, SpaceCadet, Twilight, VibrantInk)
 // bundle: c, java, javascript, markup, php, ruby, texy, rails
@@ -26,7 +26,7 @@ bundle['ptl/js' ] = bundle.js;
 
 if (bundle = bundle[{$language|js}])
 {
-	document.write('<script type="text/javascript" src="http://www.amyeditor.com/api/embed/amy.php?theme=' + theme + '&amp;bundle=' + bundle + '"><\/script>');
+	document.write('<script src="http://www.amyeditor.com/api/embed/amy.php?theme=' + theme + '&amp;bundle=' + bundle + '"><\/script>');
 }
 
 </script >

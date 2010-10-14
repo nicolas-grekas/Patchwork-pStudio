@@ -52,12 +52,12 @@ class
 
 			self::$pool = array();
 
-			foreach (explode('<br />', $a) as $a)
+			foreach (explode('<br>', $a) as $a)
 			{
 				echo implode('', self::$pool);
 				echo preg_replace_callback("'<(/?)span[^>]*>'", array(__CLASS__, 'pool_callback'), $a);
 				echo str_repeat('</span>', count(self::$pool));
-				echo "<br />\n";
+				echo "<br>\n";
 			}
 
 			$a = ob_get_clean();

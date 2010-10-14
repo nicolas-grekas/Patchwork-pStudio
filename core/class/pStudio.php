@@ -81,11 +81,43 @@ class
 
 	static function getAppname($depth)
 	{
-		global $patchwork_path;
+		static $appname;
 
-		$depth = PATCHWORK_PATH_LEVEL - $depth;
+		if (!isset($appname))
+		{
+			global $patchwork_path;
 
-		return isset($patchwork_path[$depth]) ? basename($patchwork_path[$depth]) : false;
+			$a = array();
+
+			foreach ($patchwork_path as $p)
+			{
+				$p = explode(DIRECTORY_SEPARATOR, substr($p, 0, -1));
+				$n = array_pop($p);
+
+				while (isset($a[$n]))
+				{
+					$a[array_pop($a[$n]) . DIRECTORY_SEPARATOR . $n] = $a[$n];
+					unset($a[$n]);
+					$n = array_pop($p) . DIRECTORY_SEPARATOR . $n;
+				}
+
+				$a[$n] = $p;
+			}
+
+			foreach ($a as $n => $p)
+			{
+				$p[] = $n . DIRECTORY_SEPARATOR;
+				$appname[implode(DIRECTORY_SEPARATOR, $p)] = $n;
+			}
+
+			foreach ($patchwork_path as $n => $p)
+			{
+				$appname[PATCHWORK_PATH_LEVEL - $n] = $appname[$p];
+				unset($appname[$p]);
+			}
+		}
+
+		return isset($appname[$depth]) ? $appname[$depth] : false;
 	}
 
 	static function resetCache($file, $depth)

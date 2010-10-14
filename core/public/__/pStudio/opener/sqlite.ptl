@@ -1,7 +1,8 @@
 <!-- SET g$sql -->{g$sql|trim}<!-- END:SET -->
 <!-- SET a$sql -->{a$sql|trim}<!-- END:SET -->
 
-<!-- IF !a$sql -->{* Display general info on the database *}
+<!-- IF !a$sql -->
+{* Display general info on the database *}
 
 <ul>
 <!-- LOOP $tables -->
@@ -24,7 +25,7 @@ ELSE
 END:IF
 
 -->
-<input type="submit" value="Execute" />
+<input type="submit" value="Execute">
 
 <!-- AGENT $form _mode_='close' -->
 
@@ -54,7 +55,7 @@ END:IF
 <!-- SET $prev -->{($start - $length)}<!-- END:SET
 SET $next -->{($start + $length)}<!-- END:SET -->
 <!-- IF $start>0 -->
-<tr><td><a href="{~}pStudio/explorer/{g$__0__}?low={a$low}&amp;high={a$high}&amp;sql={a$sql|urlencode|replace:'%20':'+'}&amp;start={$prev}&amp;length={$length}">&lt; Previous {$length}</a></td>
+<tr><td><a href="{~}pStudio/explorer/{g$__0__}?low={a$low}&amp;high={a$high}&amp;sql={a$sql|urlencode|replace:'%20':'+'}&amp;start={$prev}&amp;length={$length}">&lt; Prev. {$length}</a></td>
 <!-- ELSE -->
 <tr>
 <!-- END:IF -->
@@ -87,4 +88,3 @@ Your query returned no result.
 <!-- END:IF -->
 
 <!-- END:IF -->
-

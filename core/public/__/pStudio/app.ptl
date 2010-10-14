@@ -1,28 +1,17 @@
-<div style="white-space: nowrap">
+<div id="app">
+<ul>
 <!-- LOOP $apps -->
-
-<!-- IF a$low <= $depth && $depth <= a$high -->
-<div style="background-color: silver">
-<!-- END:IF -->
-
+<li class="<!-- IF $depth == $$zcacheDepth || $depth == 0 -->special<!-- END:IF --> <!-- IF a$low <= $depth && $depth <= a$high -->selected<!-- END:IF -->">
+<div class="lowHigh">
 <!--
 
-SET $lowHigh
-	IF $depth <= a$high --><a href="{~}pStudio/explorer/?low={$depth}&amp;high={a$high}" rel="nofollow">⇩</a><!-- END:IF
-	IF $depth >= a$low  --><a href="{~}pStudio/explorer/?low={a$low}&amp;high={$depth}" rel="nofollow">⇧</a><!-- END:IF
-END:SET
+IF $depth <= a$high --><a href="{~}pStudio/explorer/?low={$depth}&amp;high={a$high}" rel="nofollow" class="low">⇩</a><!-- END:IF
+IF $depth >= a$low  --><a href="{~}pStudio/explorer/?low={a$low}&amp;high={$depth}"  rel="nofollow" class="high">⇧</a><!-- END:IF
 
 -->
-
-<!-- IF $depth == $$zcacheDepth || $depth == 0 -->
-<div>{$lowHigh} <b><a href="{~}pStudio/explorer/?low={$depth}&amp;high={$depth}" title="{$path}">{$name}</a></b></div>
-<!-- ELSE -->
-<div>{$lowHigh} <a href="{~}pStudio/explorer/?low={$depth}&amp;high={$depth}" title="{$path}">{$name}</a></div>
-<!-- END:IF -->
-
-<!-- IF a$low <= $depth && $depth <= a$high -->
 </div>
-<!-- END:IF -->
-
+<a href="{~}pStudio/explorer/?low={$depth}&amp;high={$depth}" title="{$path}" class="app">{$name}</a>
+</li>
 <!-- END:LOOP -->
+</ul>
 </div>

@@ -1,4 +1,4 @@
-<!--
+<div id="opener"><!--
 
 IF $is_binary
 	-->[{"Binary content"}]<!--
@@ -6,17 +6,11 @@ ELSEIF $is_auth_edit
 	-->
 
 <!-- AGENT $form style='height: 100%' -->
-<table style="width:100%; height:100%; margin:0; padding:0">
-<tr>
-	<td style="height:100%"><!-- AGENT $f_code style='width: 100%; height: 100%' --></td>
-</tr>
-<tr>
-	<td style="height:30px"><!-- AGENT $f_save value="Save" --></td>
-</tr>
-</table>
+<div id="codeArea"><!-- AGENT $f_code --></div>
+<div id="codeTool"><!-- AGENT $f_save value="Save" --></div>
 <!-- AGENT $form _mode_='close' -->
 
-<script type="text/javascript">
+<script>
 
 code_element = document.getElementsByName('f_code')[0];
 code_is_modified = false;
@@ -36,7 +30,7 @@ setInterval(function()
 onbeforeunload = function ()
 {
 	if (code_is_modified && !save_element.value) return {"Your document has not been saved."|js};
-	if (code_is_modified && save_element.value) return {"Your document will be saved on the server."|js};
+	if (code_is_modified &&  save_element.value) return {"Your document will be saved on the server."|js};
 }
 
 </script>
@@ -47,3 +41,4 @@ ELSE
 END:IF
 
 -->
+</div>

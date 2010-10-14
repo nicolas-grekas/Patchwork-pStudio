@@ -1,7 +1,9 @@
+<style>textarea {visibility: hidden;}</style>
+
 <!-- INLINE pStudio/opener -->
 
-<script src="{~}codemirror/js/codemirror.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script src="{~}codemirror/js/codemirror.js"></script>
+<script>
 
 parser = {~|js} + 'codemirror/css/';
 parser = {
@@ -39,8 +41,10 @@ if (parser = parser[{$language|js}])
 		path: {~|js} + 'codemirror/js/',
 		autoMatchParens: true,
 		indentUnit: 4,
-		tabMode: 'shift'
+		tabMode: 'shift',
+		height: '100%'
 	});
 }
+else document.write('<style>textarea {visibility: visible;}</style>');
 
 </script>
