@@ -1,4 +1,4 @@
-<div id="opener"><!--
+<!--
 
 IF $is_binary
 	-->[{"Binary content"}]<!--
@@ -41,4 +41,3 @@ ELSE
 END:IF
 
 -->
-</div>

@@ -51,7 +51,9 @@ END:IF
 <!-- IF $is_auth_edit --><!-- AGENT $form _mode_='close' --><!-- END:IF -->
 </div>
 
+<div id="app">
 <!-- AGENT 'pStudio/app' low=$low high=$high -->
+</div>
 
 <div id="subpaths">
 	<!-- SET a$path -->/{$dirname}<!-- END:SET -->
@@ -75,6 +77,7 @@ END:IF
 	</ul>
 </div>
 
+<div id="opener">
 <!--
 
 IF $is_file
@@ -82,6 +85,7 @@ IF $is_file
 	AGENT a$a path=g$__0__ low=$low high=$high
 END:IF
 
-AGENT 'pStudio/footer'
-
 -->
+</div>
+
+<!-- AGENT 'pStudio/footer' -->

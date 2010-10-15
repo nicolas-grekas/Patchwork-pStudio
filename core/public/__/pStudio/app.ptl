@@ -1,4 +1,3 @@
-<div id="app">
 <ul>
 <!-- LOOP $apps -->
 <li class="<!-- IF $depth == $$zcacheDepth || $depth == 0 -->special<!-- END:IF --> <!-- IF a$low <= $depth && $depth <= a$high -->selected<!-- END:IF -->">
@@ -14,4 +13,3 @@ IF $depth >= a$low  --><a href="{~}pStudio/explorer/?low={a$low}&amp;high={$dept
 </li>
 <!-- END:LOOP -->
 </ul>
-</div>

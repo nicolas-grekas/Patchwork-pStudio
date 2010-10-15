@@ -154,18 +154,21 @@ class extends agent
 	{
 		$paths = array();
 
-		$i = $high;
+		$depth = $high;
 		$isTop = 1;
 		do
 		{
-			if (!pStudio::isAuthApp($GLOBALS['patchwork_path'][PATCHWORK_PATH_LEVEL - $i]))
+			if (!pStudio::isAuthApp($GLOBALS['patchwork_path'][PATCHWORK_PATH_LEVEL - $depth]))
 			{
-				--$i;
+				--$depth;
 				continue;
 			}
 
-			if ('' !== $dirpath) $path = patchworkPath($dirpath, $depth, $i, 0);
-			else if ($i < 0)
+			if ('' !== $dirpath)
+			{
+				$path = patchworkPath($dirpath, $depth, $depth, 0);
+			}
+			else if ($depth < 0)
 			{
 				if (!pStudio::isAuthRead('class')) break;
 
@@ -180,7 +183,7 @@ class extends agent
 						'isTop' => $isTop,
 						'isDir' => 1,
 						'ancestorsNb' => 0,
-						'depth' => $i,
+						'depth' => $depth,
 					);
 				}
 
@@ -188,8 +191,7 @@ class extends agent
 			}
 			else
 			{
-				$path = $GLOBALS['patchwork_path'][PATCHWORK_PATH_LEVEL - $i];
-				$depth = $i;
+				$path = $GLOBALS['patchwork_path'][PATCHWORK_PATH_LEVEL - $depth];
 			}
 
 			if (!$path || $depth < $low) break;
@@ -214,18 +216,18 @@ class extends agent
 						'isDir' => $isDir,
 						'path'  => $path . $file,
 						'ancestorsNb' => 0,
-						'depth' => $i,
-						'appname' => pStudio::getAppname($i),
+						'depth' => $depth,
+						'appname' => pStudio::getAppname($depth),
 						'isApp' => $isDir && file_exists($path . $file . '/config.patchwork.php'),
 					);
 				}
 			}
 			closedir($h);
 
-			--$i;
+			--$depth;
 			$isTop = 0;
 		}
-		while ($i >= $low);
+		while ($depth >= $low);
 
 		usort($paths, array($this, 'pathCmp'));
 
