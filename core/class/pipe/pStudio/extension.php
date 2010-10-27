@@ -31,7 +31,7 @@ class
 	{
 		?>/*<script>*/
 
-P$pStudio_extension = function($s)
+function($s)
 {
 	if ($s = str($s).match(/(\.[^.\/]+)+$/))
 	{
