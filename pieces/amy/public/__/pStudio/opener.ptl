@@ -29,4 +29,4 @@ if (bundle = bundle[{$language|js}])
 	document.write('<script src="http://www.amyeditor.com/api/embed/amy.php?theme=' + theme + '&amp;bundle=' + bundle + '"><\/script>');
 }
 
-</script >
+</script>
