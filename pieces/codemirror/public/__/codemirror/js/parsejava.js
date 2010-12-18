@@ -1,24 +1,21 @@
-/* Parse function for JavaScript. Makes use of the tokenizer from
- * tokenizecsharp.js. Note that your parsers do not have to be
- * this complicated -- if you don't want to recognize local variables,
- * in many languages it is enough to just look for braces, semicolons,
- * parentheses, etc, and know when you are inside a string or comment.
+/**
+ * Java parser for codemirror
  *
- * See manual.html for more info about the parser interface.
+ * @author Patrick Wied
  */
 
-var JSParser = Editor.Parser = (function() {
+var JavaParser = Editor.Parser = (function() {
   // Token types that can be considered to be atoms.
-  var atomicTypes = {"atom": true, "number": true, "variable": true, "string": true, "regexp": true};
+  var atomicTypes = {"atom": true, "number": true, "string": true, "regexp": true};
   // Setting that can be used to have JSON data indent properly.
   var json = false;
   // Constructor for the lexical context objects.
-  function CSharpLexical(indented, column, type, align, prev, info) {
+  function JavaLexical(indented, column, type, align, prev, info) {
     // indentation at start of this line
     this.indented = indented;
     // column at which this scope was opened
     this.column = column;
-    // type of scope ('vardef', 'stat' (statement), 'form' (special form), '[', '{', or '(')
+    // type of scope ( 'stat' (statement), 'form' (special form), '[', '{', or '(')
     this.type = type;
     // '[', '{', or '(' blocks that have any text after their opening
     // character are said to be 'aligned' -- any lines below are
@@ -30,14 +27,12 @@ var JSParser = Editor.Parser = (function() {
     this.info = info;
   }
 
-  // CSharp indentation rules.
-  function indentCSharp(lexical) {
+  // java indentation rules.
+  function indentJava(lexical) {
     return function(firstChars) {
       var firstChar = firstChars && firstChars.charAt(0), type = lexical.type;
       var closing = firstChar == type;
-      if (type == "vardef")
-        return lexical.indented + 4;
-      else if (type == "form" && firstChar == "{")
+      if (type == "form" && firstChar == "{")
         return lexical.indented;
       else if (type == "stat" || type == "form")
         return lexical.indented + indentUnit;
@@ -51,9 +46,9 @@ var JSParser = Editor.Parser = (function() {
   }
 
   // The parser-iterator-producing function itself.
-  function parseCSharp(input, basecolumn) {
+  function parseJava(input, basecolumn) {
     // Wrap the input in a token stream
-    var tokens = tokenizeCSharp(input);
+    var tokens = tokenizeJava(input);
     // The parser state. cc is a stack of actions that have to be
     // performed to finish the current statement. For example we might
     // know that we still need to find a closing parenthesis and a
@@ -62,7 +57,7 @@ var JSParser = Editor.Parser = (function() {
     // whole statements.
     var cc = [statements];
     // The lexical scope, used mostly for indentation.
-    var lexical = new CSharpLexical((basecolumn || 0) - indentUnit, 0, "block", false);
+    var lexical = new JavaLexical(basecolumn || 0, 0, "block", false);
     // Current column, and the indentation at the start of the current
     // line. Used to create lexical scope objects.
     var column = 0;
@@ -71,7 +66,7 @@ var JSParser = Editor.Parser = (function() {
     // below to communicate with the driver loop in the 'next'
     // function.
     var consume, marked;
-  
+
     // The iterator object.
     var parser = {next: next, copy: copy};
 
@@ -97,11 +92,13 @@ var JSParser = Editor.Parser = (function() {
           lexical.align = false;
         // Newline tokens get an indentation function associated with
         // them.
-        token.indentation = indentCSharp(lexical);
+        token.indentation = indentJava(lexical);
+
       }
       // No more processing for meaningless tokens.
-      if (token.type == "whitespace" || token.type == "comment")
+      if (token.type == "whitespace" || token.type == "comment" || token.type == "javadoc" || token.type == "annotation")
         return token;
+
       // When a meaningful token is found and the lexical scope's
       // align is undefined, it is an aligned scope.
       if (!("align" in lexical))
@@ -131,12 +128,12 @@ var JSParser = Editor.Parser = (function() {
     // between runs of the parser.
     function copy(){
       var _lexical = lexical, _cc = cc.concat([]), _tokenState = tokens.state;
-  
+
       return function copyParser(input){
         lexical = _lexical;
         cc = _cc.concat([]); // copies the array
         column = indented = 0;
-        tokens = tokenizeCSharp(input, _tokenState);
+        tokens = tokenizeJava(input, _tokenState);
         return parser;
       };
     }
@@ -166,7 +163,7 @@ var JSParser = Editor.Parser = (function() {
     // Push a new lexical context of the given type.
     function pushlex(type, info) {
       var result = function(){
-        lexical = new CSharpLexical(indented, column, type, null, lexical, info)
+        lexical = new JavaLexical(indented, column, type, null, lexical, info)
       };
       result.lex = true;
       return result;
@@ -179,7 +176,7 @@ var JSParser = Editor.Parser = (function() {
     // The 'lex' flag on these actions is used by the 'next' function
     // to know they can (and have to) be ran before moving on to the
     // next token.
-  
+
     // Creates an action that discards tokens until it finds one of
     // the given type.
     function expect(wanted){
@@ -196,33 +193,28 @@ var JSParser = Editor.Parser = (function() {
     // Dispatches various types of statements based on the type of the
     // current token.
     function statement(type){
-      if (type == "var") cont(pushlex("vardef"), vardef1, expect(";"), poplex);
-      else if (type == "keyword a") cont(pushlex("form"), expression, statement, poplex);
+      if (type == "keyword a") cont(pushlex("form"), expression, statement, poplex);
       else if (type == "keyword b") cont(pushlex("form"), statement, poplex);
-      else if (type == "{" && json) cont(pushlex("}"), commasep(objprop, "}"), poplex);
       else if (type == "{") cont(pushlex("}"), block, poplex);
-      else if (type == "function") cont(functiondef);
       else if (type == "for") cont(pushlex("form"), expect("("), pushlex(")"), forspec1, expect(")"), poplex, statement, poplex);
       else if (type == "variable") cont(pushlex("stat"), maybelabel);
       else if (type == "switch") cont(pushlex("form"), expression, pushlex("}", "switch"), expect("{"), block, poplex, poplex);
       else if (type == "case") cont(expression, expect(":"));
       else if (type == "default") cont(expect(":"));
-      else if (type == "catch") cont(pushlex("form"), expect("("), funarg, expect(")"), statement, poplex);
-      
-      else if (type == "class") cont(classdef);
-      else if (type == "keyword d") cont(statement);
-      
+      else if (type == "catch") cont(pushlex("form"), expect("("), function(){}, expect(")"), statement, poplex);
+      else if (type == "class") cont();
+      else if (type == "interface") cont();
+      else if (type == "keyword c") cont(statement);
       else pass(pushlex("stat"), expression, expect(";"), poplex);
     }
     // Dispatch expression types.
     function expression(type){
       if (atomicTypes.hasOwnProperty(type)) cont(maybeoperator);
-      else if (type == "function") cont(functiondef);
+      //else if (type == "function") cont(functiondef);
       else if (type == "keyword c") cont(expression);
       else if (type == "(") cont(pushlex(")"), expression, expect(")"), poplex, maybeoperator);
       else if (type == "operator") cont(expression);
       else if (type == "[") cont(pushlex("]"), commasep(expression, "]"), poplex, maybeoperator);
-      else if (type == "{") cont(pushlex("}"), commasep(objprop, "}"), poplex, maybeoperator);
     }
     // Called for places where operators, function calls, or
     // subscripts are valid. Will skip on to the next action if none
@@ -230,27 +222,17 @@ var JSParser = Editor.Parser = (function() {
     function maybeoperator(type){
       if (type == "operator") cont(expression);
       else if (type == "(") cont(pushlex(")"), expression, commasep(expression, ")"), poplex, maybeoperator);
-      else if (type == ".") cont(property, maybeoperator);
       else if (type == "[") cont(pushlex("]"), expression, expect("]"), poplex, maybeoperator);
     }
     // When a statement starts with a variable name, it might be a
     // label. If no colon follows, it's a regular statement.
+
     function maybelabel(type){
-      if (type == ":") cont(poplex, statement);
-      else if (type == "(") cont(commasep(funarg, ")"), poplex, statement); // method definition
+      if (type == "(") cont(commasep(function(){}, ")"), poplex, statement); // method definition
       else if (type == "{") cont(poplex, pushlex("}"), block, poplex); // property definition
       else pass(maybeoperator, expect(";"), poplex);
     }
-    // Property names need to have their style adjusted -- the
-    // tokenizer thinks they are variables.
-    function property(type){
-      if (type == "variable") {mark("csharp-property"); cont();}
-    }
-    // This parses a property and its value in an object literal.
-    function objprop(type){
-      if (type == "variable") mark("csharp-property");
-      if (atomicTypes.hasOwnProperty(type)) cont(expect(":"), expression);
-    }
+
     // Parses a comma-separated list of the things that are recognized
     // by the 'what' argument.
     function commasep(what, end){
@@ -269,23 +251,11 @@ var JSParser = Editor.Parser = (function() {
       if (type == "}") cont();
       else pass(statement, block);
     }
-    // Variable definitions are split into two actions -- 1 looks for
-    // a name or the end of the definition, 2 looks for an '=' sign or
-    // a comma.
-    function vardef1(type, value){
-      if (type == "variable"){cont(vardef2);}
-      else cont();
-    }
-    function vardef2(type, value){
-      if (value == "=") cont(expression, vardef2);
-      else if (type == ",") cont(vardef1);
-    }
+
     // For loops.
+
     function forspec1(type){
-      if (type == "var") cont(vardef1, forspec2);
-      else if (type == "keyword d") cont(vardef1, forspec2);
-      else if (type == ";") pass(forspec2);
-      else if (type == "variable") cont(formaybein);
+      if (type == ";") pass(forspec2);
       else pass(forspec2);
     }
     function formaybein(type, value){
@@ -301,26 +271,12 @@ var JSParser = Editor.Parser = (function() {
       if (type == ")") pass();
       else cont(expression);
     }
-    // A function definition creates a new context, and the variables
-    // in its argument list have to be added to this context.
-    function functiondef(type, value){
-      if (type == "variable") cont(functiondef);
-      else if (type == "(") cont(commasep(funarg, ")"), statement);
-    }
-    function funarg(type, value){
-      if (type == "variable"){cont();}
-    }
-    
-    function classdef(type) {
-        if (type == "variable") cont(classdef, statement);
-        else if (type == ":") cont(classdef, statement);
-    }
-  
+
     return parser;
   }
 
   return {
-    make: parseCSharp,
+    make: parseJava,
     electricChars: "{}:",
     configure: function(obj) {
       if (obj.json != null) json = obj.json;
