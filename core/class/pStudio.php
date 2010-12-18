@@ -96,8 +96,12 @@ class
 
 				while (isset($a[$n]))
 				{
-					$a[array_pop($a[$n]) . DIRECTORY_SEPARATOR . $n] = $a[$n];
-					unset($a[$n]);
+					if (false !== $a[$n])
+					{
+						$a[array_pop($a[$n]) . DIRECTORY_SEPARATOR . $n] = $a[$n];
+						$a[$n] = false;
+					}
+
 					$n = array_pop($p) . DIRECTORY_SEPARATOR . $n;
 				}
 
@@ -106,8 +110,11 @@ class
 
 			foreach ($a as $n => $p)
 			{
-				$p[] = $n . DIRECTORY_SEPARATOR;
-				$appname[implode(DIRECTORY_SEPARATOR, $p)] = $n;
+				if (false !== $p)
+				{
+					$p[] = $n . DIRECTORY_SEPARATOR;
+					$appname[implode(DIRECTORY_SEPARATOR, $p)] = $n;
+				}
 			}
 
 			foreach ($patchwork_path as $n => $p)
