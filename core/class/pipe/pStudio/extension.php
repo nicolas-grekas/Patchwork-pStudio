@@ -12,7 +12,7 @@
  ***************************************************************************/
 
 
-class
+class pipe_pStudio_extension
 {
 	static function php($s)
 	{
