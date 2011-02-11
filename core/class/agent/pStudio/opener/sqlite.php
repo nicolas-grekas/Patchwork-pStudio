@@ -109,7 +109,7 @@ class agent_pStudio_opener_sqlite extends agent_pStudio_opener
 			{
 				$sql = trim($sql->getValue());
 
-				$sql || p::redirect();
+				$sql || patchwork::redirect();
 
 				if (!$db = $this->getDb($o)) return $o;
 
@@ -117,12 +117,12 @@ class agent_pStudio_opener_sqlite extends agent_pStudio_opener
 				{
 					$sql = urlencode($sql);
 
-					$uri = p::__URI__();
+					$uri = patchwork::__URI__();
 					$uri = $uri !== strtr($uri, '?&', '--')
 						? preg_replace("'([?&]sql=)[^&]*'", '$1' . $sql, $uri)
 						: $uri . '?sql=' . $sql;
 
-					p::redirect($uri);
+					patchwork::redirect($uri);
 				}
 
 				@$db->queryExec($sql, $o->error_msg);

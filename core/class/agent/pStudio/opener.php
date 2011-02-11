@@ -102,7 +102,7 @@ class agent_pStudio_opener extends agent_pStudio_explorer
 
 				pStudio::resetCache($this->path, $this->depth);
 
-				p::redirect();
+				patchwork::redirect();
 			}
 
 			unset($o->text);

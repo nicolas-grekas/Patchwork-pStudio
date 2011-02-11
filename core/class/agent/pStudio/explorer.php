@@ -29,11 +29,11 @@ class agent_pStudio_explorer extends agent
 
 	function control()
 	{
-		$this->setPath($this->get->__0__, $this->get->low, $this->get->high) || p::redirect('pStudio');
+		$this->setPath($this->get->__0__, $this->get->low, $this->get->high) || patchwork::redirect('pStudio');
 
 		if (!empty($this->get->{'p:'}) && is_file($this->realpath))
 		{
-			p::readfile($this->realpath, $this->rawContentType, $this->realpath);
+			patchwork::readfile($this->realpath, $this->rawContentType, $this->realpath);
 		}
 	}
 
@@ -70,7 +70,7 @@ class agent_pStudio_explorer extends agent
 
 					pStudio::resetCache($this->path, $this->depth);
 
-					p::redirect();
+					patchwork::redirect();
 				}
 			}
 			else
@@ -100,7 +100,7 @@ class agent_pStudio_explorer extends agent
 				if (false !== $filename)
 				{
 					unlink(PATCHWORK_PROJECT_PATH . '.patchwork.php');
-					p::redirect("pStudio/explorer/{$this->path}{$filename}/?low={$this->get->low}&high={$this->get->high}");
+					patchwork::redirect("pStudio/explorer/{$this->path}{$filename}/?low={$this->get->low}&high={$this->get->high}");
 				}
 			}
 
@@ -112,7 +112,7 @@ class agent_pStudio_explorer extends agent
 				else rmdir($this->realpath);
 
 				unlink(PATCHWORK_PROJECT_PATH . '.patchwork.php');
-				p::redirect('pStudio/explorer/' . dirname($this->path) . "/?low={$this->get->low}&high={$this->get->high}");
+				patchwork::redirect('pStudio/explorer/' . dirname($this->path) . "/?low={$this->get->low}&high={$this->get->high}");
 			}
 		}
 

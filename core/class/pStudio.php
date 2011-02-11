@@ -143,8 +143,8 @@ class pStudio
 	{
 		if (0 === strpos($file, 'public/'))
 		{
-			p::touch('public');
-			p::updateAppId();
+			patchwork::touch('public');
+			patchwork::updateAppId();
 		}
 		else
 		{
