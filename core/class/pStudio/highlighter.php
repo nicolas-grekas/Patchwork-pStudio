@@ -59,20 +59,17 @@ class pStudio_highlighter
 		if ($line_numbers)
 		{
 			$a = str_replace("\n", '', $a);
-
-			ob_start();
-
+			$b = array();
 			self::$pool = array();
 
 			foreach (explode('<br>', $a) as $a)
 			{
-				echo implode('', self::$pool);
-				echo preg_replace_callback("'<(/?)span[^>]*>'", array(__CLASS__, 'pool_callback'), $a);
-				echo str_repeat('</span>', count(self::$pool));
-				echo "<br>\n";
+				$b[] = implode('', self::$pool)
+					. preg_replace_callback("'<(/?)span[^>]*>'", array(__CLASS__, 'pool_callback'), $a)
+					. str_repeat('</span>', count(self::$pool));
 			}
 
-			$a = ob_get_clean();
+			$a = implode("<br>\n", $b);
 		}
 
 		return self::finalize($a, $line_numbers);
