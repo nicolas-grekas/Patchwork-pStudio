@@ -1,6 +1,6 @@
-<?php /*********************************************************************
+<?php /***** vi: set encoding=utf-8 expandtab shiftwidth=4: ****************
  *
- *   Copyright : (C) 2010 Nicolas Grekas. All rights reserved.
+ *   Copyright : (C) 2011 Nicolas Grekas. All rights reserved.
  *   Email     : p@tchwork.org
  *   License   : http://www.gnu.org/licenses/agpl.txt GNU/AGPL
  *
@@ -14,36 +14,36 @@
 
 class agent_pStudio_app extends agent
 {
-	function control()
-	{
-	}
+    function control()
+    {
+    }
 
-	function compose($o)
-	{
-		patchworkPath('zcache/', $o->zcacheDepth);
+    function compose($o)
+    {
+        patchworkPath('zcache/', $o->zcacheDepth);
 
-		$app = array();
+        $app = array();
 
-		foreach ($GLOBALS['patchwork_path'] as $k => $v)
-		{
-			pStudio::isAuthApp($v) && $app[$k] = $v;
-		}
+        foreach ($GLOBALS['patchwork_path'] as $k => $v)
+        {
+            pStudio::isAuthApp($v) && $app[$k] = $v;
+        }
 
-		$o->apps = new loop_array($app, array($this, 'filterApp'));
+        $o->apps = new loop_array($app, array($this, 'filterApp'));
 
-		return $o;
-	}
+        return $o;
+    }
 
-	function filterApp($o)
-	{
-		$depth = PATCHWORK_PATH_LEVEL - $o->KEY;
+    function filterApp($o)
+    {
+        $depth = PATCHWORK_PATH_LEVEL - $o->KEY;
 
-		$o = (object) array(
-			'name' => pStudio::getAppname($depth),
-			'depth' => $depth,
-			'path' => $o->VALUE,
-		);
+        $o = (object) array(
+            'name' => pStudio::getAppname($depth),
+            'depth' => $depth,
+            'path' => $o->VALUE,
+        );
 
-		return $o;
-	}
+        return $o;
+    }
 }

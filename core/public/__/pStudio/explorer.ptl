@@ -14,36 +14,36 @@ SET a$rel --><!-- IF $low != $high -->rel="nofollow"<!-- END:IF --><!-- END:SET
 SET a$path --><!-- END:SET
 
 LOOP $paths
-	SET a$path -->{a$path}{$VALUE}/<!-- END:SET
+    SET a$path -->{a$path}{$VALUE}/<!-- END:SET
 
-	--> &gt; <!--
+    --> &gt; <!--
 
-	IF $iteratorPosition + 1 < $$paths
-		--><a href="{~}pStudio/explorer/{a$path}?low={$$low}&amp;high={$$high}" class="dir" {a$rel}>{$VALUE}</a><!--
-	ELSEIF d$is_file
-		--><a href="{~}pStudio/explorer/{g$__0__}?low={$$low}&amp;high={$$high}&amp;p:=serverside" class="file selected" {a$rel}>{$VALUE}</a><!--
-	ELSE
-		--><span class="dir selected">{$VALUE}</span><!--
-	END:IF
+    IF $iteratorPosition + 1 < $$paths
+        --><a href="{~}pStudio/explorer/{a$path}?low={$$low}&amp;high={$$high}" class="dir" {a$rel}>{$VALUE}</a><!--
+    ELSEIF d$is_file
+        --><a href="{~}pStudio/explorer/{g$__0__}?low={$$low}&amp;high={$$high}&amp;p:=serverside" class="file selected" {a$rel}>{$VALUE}</a><!--
+    ELSE
+        --><span class="dir selected">{$VALUE}</span><!--
+    END:IF
 END:LOOP
 
 IF $is_auth_edit
-	IF $is_file
-		--> Current file: <!--
-		AGENT $f_file
-		AGENT $f_send value="Replace"
-		AGENT $f_del value="Delete"
-	ELSE
-		IF $f_del
-			--> Current directory: <!--
-			AGENT $f_del value="Delete" --><br><!--
-		END:IF
+    IF $is_file
+        --> Current file: <!--
+        AGENT $f_file
+        AGENT $f_send value="Replace"
+        AGENT $f_del value="Delete"
+    ELSE
+        IF $f_del
+            --> Current directory: <!--
+            AGENT $f_del value="Delete" --><br><!--
+        END:IF
 
-		--> New <!--
-		AGENT $f_newfile value="File*" --> or <!--
-		AGENT $f_newdir  value="Directory*" -->: <!--
-		AGENT $f_filename
-	END:IF
+        --> New <!--
+        AGENT $f_newfile value="File*" --> or <!--
+        AGENT $f_newdir  value="Directory*" -->: <!--
+        AGENT $f_filename
+    END:IF
 END:IF
 
 -->
@@ -56,33 +56,33 @@ END:IF
 </div>
 
 <div id="subpaths">
-	<!-- SET a$path -->/{$dirname}<!-- END:SET -->
-	<!-- SET a$fullpath -->{~}pStudio/explorer{a$path}<!-- END:SET -->
-	<ul>
-	<!-- IF '/' != a$path -->
-	<li><a href="{a$fullpath|replace:'[^/]*/$':'/'}?low={$low}&amp;high={$high}" class="dir" {a$rel}>..</a></li>
-	<!-- END:IF -->
+    <!-- SET a$path -->/{$dirname}<!-- END:SET -->
+    <!-- SET a$fullpath -->{~}pStudio/explorer{a$path}<!-- END:SET -->
+    <ul>
+    <!-- IF '/' != a$path -->
+    <li><a href="{a$fullpath|replace:'[^/]*/$':'/'}?low={$low}&amp;high={$high}" class="dir" {a$rel}>..</a></li>
+    <!-- END:IF -->
 
-	<!-- LOOP $subpaths -->
-	<li class="<!-- IF $isTop -->isTop<!-- END:IF --> <!-- IF $ancestorsNb -->hasAncestor<!-- END:IF -->">
-		<!-- IF $isApp -->
-		<span class="app">{$name}</span>
-		<!-- ELSEIF $isDir -->
-		<a href="{a$fullpath}{$name}/?low={$$low}&amp;high={$$high}" title="{$appname}" class="dir" {a$rel}>{$name}/</a>
-		<!-- ELSE -->
-		<a href="{a$fullpath}{$name}?low={$$low}&amp;high={$$high}" title="{$appname}" class="file" {a$rel}>{$name}</a>
-		<!-- END:IF -->
-	</li>
-	<!-- END:LOOP -->
-	</ul>
+    <!-- LOOP $subpaths -->
+    <li class="<!-- IF $isTop -->isTop<!-- END:IF --> <!-- IF $ancestorsNb -->hasAncestor<!-- END:IF -->">
+        <!-- IF $isApp -->
+        <span class="app">{$name}</span>
+        <!-- ELSEIF $isDir -->
+        <a href="{a$fullpath}{$name}/?low={$$low}&amp;high={$$high}" title="{$appname}" class="dir" {a$rel}>{$name}/</a>
+        <!-- ELSE -->
+        <a href="{a$fullpath}{$name}?low={$$low}&amp;high={$$high}" title="{$appname}" class="file" {a$rel}>{$name}</a>
+        <!-- END:IF -->
+    </li>
+    <!-- END:LOOP -->
+    </ul>
 </div>
 
 <div id="opener">
 <!--
 
 IF $is_file
-	SET a$a -->pStudio/opener/{g$__0__|pStudio_extension}<!-- END:SET
-	AGENT a$a path=g$__0__ low=$low high=$high
+    SET a$a -->pStudio/opener/{g$__0__|pStudio_extension}<!-- END:SET
+    AGENT a$a path=g$__0__ low=$low high=$high
 END:IF
 
 -->

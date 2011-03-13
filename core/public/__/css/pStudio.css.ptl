@@ -2,130 +2,130 @@
 
 html, body
 {
-	height: 100%;
-	margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 #mainTool
 {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 40px;
-	padding: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    padding: 5px;
 }
 
 #app
 {
-	position: absolute;
-	top: 40px;
-	left: 0;
-	width: 150px;
-	padding: 5px;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 150px;
+    padding: 5px;
 }
 
 #subpaths
 {
-	position: absolute;
-	top: 40px;
-	left: 150px;
-	width: 150px;
-	padding: 5px;
+    position: absolute;
+    top: 40px;
+    left: 150px;
+    width: 150px;
+    padding: 5px;
 }
 
 #opener
 {
-	padding: 5px;
-	position: absolute;
-	top: 40px;
-	bottom: 0;
-	left: 300px;
-	right: 0;
+    padding: 5px;
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    left: 300px;
+    right: 0;
 }
 
 #app ul, #subpaths ul
 {
-	white-space: nowrap;
-	margin: 0;
+    white-space: nowrap;
+    margin: 0;
 }
 
 #app li, #subpaths li
 {
-	list-style: none;
+    list-style: none;
 }
 
 #app .app
 {
-	margin: 0 10px;
+    margin: 0 10px;
 }
 
 #app a
 {
-	color: #bbb;
+    color: #bbb;
 }
 
 #app .special
 {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 #app .selected a
 {
-	color: black;
+    color: black;
 }
 
 #app .lowHigh
 {
-	float: left;
-	width: 22px;
+    float: left;
+    width: 22px;
 }
 
 #app .low
 {
-	float: left;
+    float: left;
 }
 
 #app .high
 {
-	float: right;
+    float: right;
 }
 
 #codeArea
 {
-	position: absolute;
-	bottom: 25px;
-	top:   0;
-	left:  0;
-	right: 0;
-	border: 1px solid silver;
-	overflow: auto;
+    position: absolute;
+    bottom: 25px;
+    top:   0;
+    left:  0;
+    right: 0;
+    border: 1px solid silver;
+    overflow: auto;
 }
 
 #codeTool
 {
-	position: absolute;
-	height: 25px;
-	bottom: 0;
-	left:   0;
-	right:  0;
+    position: absolute;
+    height: 25px;
+    bottom: 0;
+    left:   0;
+    right:  0;
 }
 
 #codeArea textarea, #opener pre
 {
-	width:  100%;
-	height: 100%;
-	border: 0;
-	overflow: auto;
+    width:  100%;
+    height: 100%;
+    border: 0;
+    overflow: auto;
 }
 
 .dir
 {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .app
 {
-	font-variant: small-caps;
+    font-variant: small-caps;
 }
 

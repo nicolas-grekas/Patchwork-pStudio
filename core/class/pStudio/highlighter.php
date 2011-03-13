@@ -1,6 +1,6 @@
-<?php /*********************************************************************
+<?php /***** vi: set encoding=utf-8 expandtab shiftwidth=4: ****************
  *
- *   Copyright : (C) 2010 Nicolas Grekas. All rights reserved.
+ *   Copyright : (C) 2011 Nicolas Grekas. All rights reserved.
  *   Email     : p@tchwork.org
  *   License   : http://www.gnu.org/licenses/agpl.txt GNU/AGPL
  *
@@ -14,72 +14,72 @@
 
 class pStudio_highlighter
 {
-	static function highlight($a, $language, $line_numbers)
-	{
-		$language = 'highlight_' . patchwork_class2file($language);
+    static function highlight($a, $language, $line_numbers)
+    {
+        $language = 'highlight_' . patchwork_class2file($language);
 
-		return method_exists(__CLASS__, $language)
-			? self::$language($a, $line_numbers)
-			: self::highlight_txt($a, $line_numbers);
-	}
-
-
-	protected static function highlight_txt($a, $line_numbers)
-	{
-		$a = htmlspecialchars($a);
-		$a = nl2br($a);
-
-		return self::finalize($a, $line_numbers);
-	}
-
-	protected static function finalize($a, $line_numbers)
-	{
-		$a = str_replace("\t", '    ' , $a);
-		$a = str_replace('  ' , ' &nbsp;', $a);
-
-		if ($line_numbers)
-		{
-			$a = preg_replace("'^.*$'m", '<li><code>$0</code></li>', $a);
-			$a = '<ol style="font-family:monospace;">' . $a . '</ol>';
-		}
-		else $a = '<code>' . $a . '</code>';
-
-		return $a;
-	}
+        return method_exists(__CLASS__, $language)
+            ? self::$language($a, $line_numbers)
+            : self::highlight_txt($a, $line_numbers);
+    }
 
 
-	protected static $pool;
+    protected static function highlight_txt($a, $line_numbers)
+    {
+        $a = htmlspecialchars($a);
+        $a = nl2br($a);
 
-	protected static function highlight_php($a, $line_numbers)
-	{
-		$a = highlight_string($a, true);
-		$a = substr($a, 6, -7);
-		$a = str_replace('&nbsp;' , ' ', $a);
+        return self::finalize($a, $line_numbers);
+    }
 
-		if ($line_numbers)
-		{
-			$a = str_replace("\n", '', $a);
-			$b = array();
-			self::$pool = array();
+    protected static function finalize($a, $line_numbers)
+    {
+        $a = str_replace("\t", '    ' , $a);
+        $a = str_replace('  ' , ' &nbsp;', $a);
 
-			foreach (explode('<br>', $a) as $a)
-			{
-				$b[] = implode('', self::$pool)
-					. preg_replace_callback("'<(/?)span[^>]*>'", array(__CLASS__, 'pool_callback'), $a)
-					. str_repeat('</span>', count(self::$pool));
-			}
+        if ($line_numbers)
+        {
+            $a = preg_replace("'^.*$'m", '<li><code>$0</code></li>', $a);
+            $a = '<ol style="font-family:monospace;">' . $a . '</ol>';
+        }
+        else $a = '<code>' . $a . '</code>';
 
-			$a = implode("<br>\n", $b);
-		}
+        return $a;
+    }
 
-		return self::finalize($a, $line_numbers);
-	}
 
-	protected static function pool_callback($m)
-	{
-		if ($m[1]) array_pop(self::$pool);
-		else array_push(self::$pool, $m[0]);
+    protected static $pool;
 
-		return $m[0];
-	}
+    protected static function highlight_php($a, $line_numbers)
+    {
+        $a = highlight_string($a, true);
+        $a = substr($a, 6, -7);
+        $a = str_replace('&nbsp;' , ' ', $a);
+
+        if ($line_numbers)
+        {
+            $a = str_replace("\n", '', $a);
+            $b = array();
+            self::$pool = array();
+
+            foreach (explode('<br>', $a) as $a)
+            {
+                $b[] = implode('', self::$pool)
+                    . preg_replace_callback("'<(/?)span[^>]*>'", array(__CLASS__, 'pool_callback'), $a)
+                    . str_repeat('</span>', count(self::$pool));
+            }
+
+            $a = implode("<br>\n", $b);
+        }
+
+        return self::finalize($a, $line_numbers);
+    }
+
+    protected static function pool_callback($m)
+    {
+        if ($m[1]) array_pop(self::$pool);
+        else array_push(self::$pool, $m[0]);
+
+        return $m[0];
+    }
 }

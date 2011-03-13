@@ -19,9 +19,9 @@
 <!--
 
 IF $error_msg
-	AGENT $sql _format_='%1%2'
+    AGENT $sql _format_='%1%2'
 ELSE
-	AGENT $sql _format_='%1%2' value=g$sql
+    AGENT $sql _format_='%1%2' value=g$sql
 END:IF
 
 -->
@@ -32,12 +32,12 @@ END:IF
 <!--
 
 IF $error_msg
-	-->
-	{$error_msg}
-	<h2>{$write_sql|allowhtml}</h2>
-	<!--
+    -->
+    {$error_msg}
+    <h2>{$write_sql|allowhtml}</h2>
+    <!--
 ELSEIF g$sql -->{* display query results *}<!--
-	AGENT 'pStudio/opener/sqlite' path=a$path low=a$low high=a$high sql=g$sql start=g$start length=g$length
+    AGENT 'pStudio/opener/sqlite' path=a$path low=a$low high=a$high sql=g$sql start=g$start length=g$length
 END:IF
 -->
 
@@ -67,17 +67,17 @@ SET $next -->{($start + $length)}<!-- END:SET -->
 <table border="1">
 <tr>
 <!-- LOOP $fields -->
-	<th>{$VALUE}</th>
+    <th>{$VALUE}</th>
 <!-- END:LOOP -->
 </tr>
 <!-- LOOP $rows -->
 <tr>
 <!-- LOOP $columns -->
-	<!-- IF $VALUE-0 == $VALUE -->{* Align numbers on the right *}
-	<td style="text-align: right">{$VALUE|default:'&nbsp;'}</td>
-	<!-- ELSE -->
-	<td>{$VALUE}</td>
-	<!-- END:IF -->
+    <!-- IF $VALUE-0 == $VALUE -->{* Align numbers on the right *}
+    <td style="text-align: right">{$VALUE|default:'&nbsp;'}</td>
+    <!-- ELSE -->
+    <td>{$VALUE}</td>
+    <!-- END:IF -->
 <!-- END:LOOP -->
 </tr>
 <!-- END:LOOP -->

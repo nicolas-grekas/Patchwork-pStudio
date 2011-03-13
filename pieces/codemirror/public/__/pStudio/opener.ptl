@@ -8,25 +8,25 @@
 parser = {~|js} + 'codemirror/css/';
 parser = {
 
-	'sql': {file: 'parsesql.js',
-			css : parser + 'sqlcolors.css'},
+    'sql': {file: 'parsesql.js',
+            css : parser + 'sqlcolors.css'},
 
-	'css': {file: 'parsecss.js',
-			css : parser + 'csscolors.css'},
+    'css': {file: 'parsecss.js',
+            css : parser + 'csscolors.css'},
 
-	'html':{file: ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'parsehtmlmixed.js'],
-			css : [parser+'xmlcolors.css', parser+'jscolors.css', parser+'csscolors.css']},
+    'html':{file: ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'parsehtmlmixed.js'],
+            css : [parser+'xmlcolors.css', parser+'jscolors.css', parser+'csscolors.css']},
 
-	'xml': {file: 'parsexml.js',
-			css : parser+'xmlcolors.css'},
+    'xml': {file: 'parsexml.js',
+            css : parser+'xmlcolors.css'},
 
-	'js' : {file: ['tokenizejavascript.js', 'parsejavascript.js'],
-			css : parser+'jscolors.css'},
+    'js' : {file: ['tokenizejavascript.js', 'parsejavascript.js'],
+            css : parser+'jscolors.css'},
 
-	'php': {file: ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'tokenizephp.js', 'parsephp.js', 'parsephphtmlmixed.js'],
-			css : [parser+'xmlcolors.css', parser+'jscolors.css', parser+'csscolors.css', parser+'phpcolors.css']},
+    'php': {file: ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'tokenizephp.js', 'parsephp.js', 'parsephphtmlmixed.js'],
+            css : [parser+'xmlcolors.css', parser+'jscolors.css', parser+'csscolors.css', parser+'phpcolors.css']},
 
-	'':0
+    '':0
 };
 
 parser['ptl'    ] = parser.html;
@@ -35,15 +35,15 @@ parser['ptl/js' ] = parser.js;
 
 if (parser = parser[{$language|js}])
 {
-	CodeMirror.fromTextArea(document.getElementsByName('f_code')[0], {
-		parserfile: parser.file,
-		stylesheet: parser.css,
-		path: {~|js} + 'codemirror/js/',
-		autoMatchParens: true,
-		indentUnit: 4,
-		tabMode: 'shift',
-		height: '100%'
-	});
+    CodeMirror.fromTextArea(document.getElementsByName('f_code')[0], {
+        parserfile: parser.file,
+        stylesheet: parser.css,
+        path: {~|js} + 'codemirror/js/',
+        autoMatchParens: true,
+        indentUnit: 4,
+        tabMode: 'shift',
+        height: '100%'
+    });
 }
 else document.write('<style>textarea {visibility: visible;}</style>');
 

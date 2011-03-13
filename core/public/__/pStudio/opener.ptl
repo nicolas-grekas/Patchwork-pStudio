@@ -1,9 +1,9 @@
 <!--
 
 IF $is_binary
-	-->[{"Binary content"}]<!--
+    -->[{"Binary content"}]<!--
 ELSEIF $is_auth_edit
-	-->
+    -->
 
 <!-- AGENT $form style='height: 100%' -->
 <div id="codeArea"><!-- AGENT $f_code --></div>
@@ -18,26 +18,26 @@ save_element = document.getElementsByName('f_save')[0];
 
 setInterval(function()
 {
-	window.code_is_modified = code_element.defaultValue != code_element.value;
+    window.code_is_modified = code_element.defaultValue != code_element.value;
 
-	var s = ' *', v = window.save_element.value;
-	if (s == v.substr(v.length-s.length)) v = v.substr(0, v.length - s.length);
-	if (window.code_is_modified) v += s;
-	if (v != window.save_element.value) window.save_element.value = v;
+    var s = ' *', v = window.save_element.value;
+    if (s == v.substr(v.length-s.length)) v = v.substr(0, v.length - s.length);
+    if (window.code_is_modified) v += s;
+    if (v != window.save_element.value) window.save_element.value = v;
 
 }, 300);
 
 onbeforeunload = function ()
 {
-	if (code_is_modified && !save_element.value) return {"Your document has not been saved."|js};
-	if (code_is_modified &&  save_element.value) return {"Your document will be saved on the server."|js};
+    if (code_is_modified && !save_element.value) return {"Your document has not been saved."|js};
+    if (code_is_modified &&  save_element.value) return {"Your document will be saved on the server."|js};
 }
 
 </script>
-	<!--
+    <!--
 
 ELSE
-	--><pre>{$text}</pre><!--
+    --><pre>{$text}</pre><!--
 END:IF
 
 -->

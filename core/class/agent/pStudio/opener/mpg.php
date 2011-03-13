@@ -1,6 +1,6 @@
-<?php /*********************************************************************
+<?php /***** vi: set encoding=utf-8 expandtab shiftwidth=4: ****************
  *
- *   Copyright : (C) 2007 Nicolas Grekas. All rights reserved.
+ *   Copyright : (C) 2011 Nicolas Grekas. All rights reserved.
  *   Email     : p@tchwork.org
  *   License   : http://www.gnu.org/licenses/agpl.txt GNU/AGPL
  *
@@ -14,13 +14,13 @@
 
 class agent_pStudio_opener_mpg extends agent_pStudio_opener
 {
-	protected $rawContentType = 'audio/mpeg';
+    protected $rawContentType = 'audio/mpeg';
 
-	protected function composeReader($o)
-	{
-		$o->rawContentType = $this->rawContentType;
+    protected function composeReader($o)
+    {
+        $o->rawContentType = $this->rawContentType;
 
-		return $o;
-	}
+        return $o;
+    }
 }
 

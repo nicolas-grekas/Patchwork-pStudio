@@ -1,6 +1,6 @@
-<?php /*********************************************************************
+<?php /***** vi: set encoding=utf-8 expandtab shiftwidth=4: ****************
  *
- *   Copyright : (C) 2010 Nicolas Grekas. All rights reserved.
+ *   Copyright : (C) 2011 Nicolas Grekas. All rights reserved.
  *   Email     : p@tchwork.org
  *   License   : http://www.gnu.org/licenses/agpl.txt GNU/AGPL
  *
@@ -14,14 +14,14 @@
 
 class agent_pStudio_opener_gif extends agent_pStudio_opener
 {
-	protected $rawContentType = 'image/gif';
+    protected $rawContentType = 'image/gif';
 
-	protected function composeReader($o)
-	{
-		list($o->width, $o->height) = getimagesize($this->realpath);
+    protected function composeReader($o)
+    {
+        list($o->width, $o->height) = getimagesize($this->realpath);
 
-		$o->filesize  = filesize($this->realpath);
+        $o->filesize  = filesize($this->realpath);
 
-		return $o;
-	}
+        return $o;
+    }
 }
