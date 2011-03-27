@@ -16,6 +16,6 @@ class agent_pStudio extends agent
 {
     function control()
     {
-        patchwork::redirect('pStudio/explorer');
+        Patchwork::redirect('pStudio/explorer');
     }
 }

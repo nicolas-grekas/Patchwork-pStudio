@@ -11,6 +11,7 @@
  *
  ***************************************************************************/
 
+use Patchwork\Utf8 as u;
 
 class agent_pStudio_opener extends agent_pStudio_explorer
 {
@@ -101,7 +102,7 @@ class agent_pStudio_opener extends agent_pStudio_explorer
                 file_put_contents($this->realpath, $code);
 
                 pStudio::syncCache($this->path, $this->depth);
-                patchwork::redirect();
+                Patchwork::redirect();
             }
 
             unset($o->text);

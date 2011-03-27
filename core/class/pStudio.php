@@ -148,12 +148,12 @@ class pStudio
     {
         if (0 === strpos($file, 'public/'))
         {
-            patchwork::touch('public');
-            patchwork::updateAppId();
+            Patchwork::touch('public');
+            Patchwork::updateAppId();
         }
         else
         {
-            if (0 === strpos($file, 'class/patchwork/'))
+            if (0 === strpos($file, 'class/Patchwork/'))
             {
                 self::resetCache();
             }
@@ -164,7 +164,7 @@ class pStudio
                 @unlink($file);
             }
 
-            patchwork_debugger::purgeZcache();
+            Patchwork\Debugger::purgeZcache();
         }
     }
 }

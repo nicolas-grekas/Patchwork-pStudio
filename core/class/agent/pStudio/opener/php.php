@@ -11,6 +11,7 @@
  *
  ***************************************************************************/
 
+use Patchwork\Utf8 as u;
 
 class agent_pStudio_opener_php extends agent_pStudio_opener
 {
