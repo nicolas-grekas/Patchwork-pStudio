@@ -68,8 +68,7 @@ class agent_pStudio_explorer extends agent
                     unlink($this->realpath);
                     move_uploaded_file($file['tmp_name'], $this->realpath);
 
-                    pStudio::resetCache($this->path, $this->depth);
-
+                    pStudio::syncCache($this->path, $this->depth);
                     patchwork::redirect();
                 }
             }
@@ -99,7 +98,7 @@ class agent_pStudio_explorer extends agent
 
                 if (false !== $filename)
                 {
-                    unlink(PATCHWORK_PROJECT_PATH . '.patchwork.php');
+                    pStudio::resetCache();
                     patchwork::redirect("pStudio/explorer/{$this->path}{$filename}/?low={$this->get->low}&high={$this->get->high}");
                 }
             }
@@ -111,7 +110,7 @@ class agent_pStudio_explorer extends agent
                 if ($o->is_file) rename($this->realpath, $this->realpath . '~trashed');
                 else rmdir($this->realpath);
 
-                unlink(PATCHWORK_PROJECT_PATH . '.patchwork.php');
+                pStudio::resetCache();
                 patchwork::redirect('pStudio/explorer/' . dirname($this->path) . "/?low={$this->get->low}&high={$this->get->high}");
             }
         }

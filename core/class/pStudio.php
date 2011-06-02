@@ -139,7 +139,12 @@ class pStudio
         return isset($appname[$depth]) ? $appname[$depth] : false;
     }
 
-    static function resetCache($file, $depth)
+    static function resetCache()
+    {
+        unlink(PATCHWORK_PROJECT_PATH . '.patchwork.php');
+    }
+
+    static function syncCache($file, $depth)
     {
         if (0 === strpos($file, 'public/'))
         {
@@ -150,7 +155,7 @@ class pStudio
         {
             if (0 === strpos($file, 'class/patchwork/'))
             {
-                unlink(PATCHWORK_PROJECT_PATH . '.patchwork.php');
+                self::resetCache();
             }
             else if (0 === strpos($file, 'class/'))
             {

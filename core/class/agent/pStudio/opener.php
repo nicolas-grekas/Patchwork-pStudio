@@ -100,8 +100,7 @@ class agent_pStudio_opener extends agent_pStudio_explorer
 
                 file_put_contents($this->realpath, $code);
 
-                pStudio::resetCache($this->path, $this->depth);
-
+                pStudio::syncCache($this->path, $this->depth);
                 patchwork::redirect();
             }
 
