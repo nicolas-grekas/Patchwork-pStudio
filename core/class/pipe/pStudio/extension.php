@@ -16,7 +16,7 @@ class pipe_pStudio_extension
 {
     static function php($s)
     {
-        if (preg_match('/(\.[^.\/]+)+$/', Patchwork::string($s), $s))
+        if (preg_match('/(\.[^.\/]+)+$/', $s, $s))
         {
             $s = explode('.', $s[0]);
             $s = array_reverse($s);

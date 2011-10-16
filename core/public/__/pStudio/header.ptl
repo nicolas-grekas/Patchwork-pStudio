@@ -7,6 +7,6 @@ END:SET
 
 SET a$css -->{a$css|default:'css/pStudio'}<!-- END:SET
 
-INLINE header:0
+INLINE base-header
 
 -->

@@ -1,4 +1,5 @@
-<!-- INLINE css/style.css:0 -->
+<!-- AGENT 'css/yui.css' -->
+<!-- AGENT 'css/patchwork.css' -->
 
 html, body
 {
@@ -128,4 +129,3 @@ html, body
 {
     font-variant: small-caps;
 }
-
