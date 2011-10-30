@@ -11,6 +11,7 @@
  *
  ***************************************************************************/
 
+use Patchwork as p;
 
 class pStudio
 {
@@ -148,8 +149,8 @@ class pStudio
     {
         if (0 === strpos($file, 'public/'))
         {
-            Patchwork::touch('public');
-            Patchwork::updateAppId();
+            p::touch('public');
+            p::updateAppId();
         }
         else
         {
@@ -159,12 +160,12 @@ class pStudio
             }
             else if (0 === strpos($file, 'class/'))
             {
-                $file = patchwork_file2class(substr($file, 6));
-                $file = patchwork_class2cache($file, $depth);
+                $file = p\Superloader::file2class(substr($file, 6));
+                $file = p\Superloader::class2cache($file, $depth);
                 @unlink($file);
             }
 
-            Patchwork\Debugger::purgeZcache();
+            p\Debugger::purgeZcache();
         }
     }
 }
