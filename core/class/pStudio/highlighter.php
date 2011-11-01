@@ -16,7 +16,7 @@ class pStudio_highlighter
 {
     static function highlight($a, $language, $line_numbers)
     {
-        $language = 'highlight_' . Patchwork\Superloader::class2file($language);
+        $language = 'highlight_' . strtr($language, '/', '_');
 
         return method_exists(__CLASS__, $language)
             ? self::$language($a, $line_numbers)

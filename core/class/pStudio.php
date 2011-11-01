@@ -160,8 +160,7 @@ class pStudio
             }
             else if (0 === strpos($file, 'class/'))
             {
-                $file = p\Superloader::file2class(substr($file, 6));
-                $file = p\Superloader::class2cache($file, $depth);
+                $file = p\Superloader::file2cache(substr($file, 6), $depth);
                 @unlink($file);
             }
 
