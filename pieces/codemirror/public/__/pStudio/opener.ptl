@@ -1,50 +1,47 @@
-<style>textarea {visibility: hidden;}</style>
+<style>#codeArea>textarea {visibility: hidden;}</style>
 
 <!-- INLINE pStudio/opener -->
 
-<script src="{~}codemirror/js/codemirror.js"></script>
+<link rel="stylesheet" href="{~}codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="{~}codemirror/theme/default.css">
+<style>.CodeMirror, .CodeMirror-scroll {height: 100%;}</style>
+
+<script src="{~}codemirror/lib/codemirror.js"></script>
+
+<script src="{~}codemirror/mode/plsql/plsql.js"></script>
+<script src="{~}codemirror/mode/xml/xml.js"></script>
+<script src="{~}codemirror/mode/javascript/javascript.js"></script>
+<script src="{~}codemirror/mode/css/css.js"></script>
+<script src="{~}codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="{~}codemirror/mode/clike/clike.js"></script>
+<script src="{~}codemirror/mode/php/php.js"></script>
+
 <script>
 
-parser = {~|js} + 'codemirror/css/';
-parser = {
-
-    'sql': {file: 'parsesql.js',
-            css : parser + 'sqlcolors.css'},
-
-    'css': {file: 'parsecss.js',
-            css : parser + 'csscolors.css'},
-
-    'html':{file: ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'parsehtmlmixed.js'],
-            css : [parser+'xmlcolors.css', parser+'jscolors.css', parser+'csscolors.css']},
-
-    'xml': {file: 'parsexml.js',
-            css : parser+'xmlcolors.css'},
-
-    'js' : {file: ['tokenizejavascript.js', 'parsejavascript.js'],
-            css : parser+'jscolors.css'},
-
-    'php': {file: ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'tokenizephp.js', 'parsephp.js', 'parsephphtmlmixed.js'],
-            css : [parser+'xmlcolors.css', parser+'jscolors.css', parser+'csscolors.css', parser+'phpcolors.css']},
-
+mode = {
+    'sql': 'text/x-plsql',
+    'css': 'text/css',
+    'xml': 'application/xml',
+    'js' : 'text/javascript',
+    'php': 'application/x-httpd-php',
+    'html': 'text/html',
     '':0
 };
 
-parser['ptl'    ] = parser.html;
-parser['ptl/css'] = parser.css;
-parser['ptl/js' ] = parser.js;
+mode['ptl'    ] = mode.html;
+mode['ptl/css'] = mode.css;
+mode['ptl/js' ] = mode.js;
 
-if (parser = parser[{$language|js}])
+if (mode = mode[{$language|js}])
 {
     CodeMirror.fromTextArea(document.getElementsByName('f_code')[0], {
-        parserfile: parser.file,
-        stylesheet: parser.css,
-        path: {~|js} + 'codemirror/js/',
-        autoMatchParens: true,
+        mode: mode,
         indentUnit: 4,
-        tabMode: 'shift',
-        height: '100%'
+        lineNumbers: true,
+        matchBrackets: true,
+        tabMode: 'shift'
     });
 }
-else document.write('<style>textarea {visibility: visible;}</style>');
+else document.write('<style>#codeArea>textarea {visibility: visible;}<\/style>');
 
 </script>
