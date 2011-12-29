@@ -3,7 +3,6 @@
 <!-- INLINE pStudio/opener -->
 
 <link rel="stylesheet" href="{~}codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="{~}codemirror/theme/default.css">
 <style>.CodeMirror, .CodeMirror-scroll {height: 100%;}</style>
 
 <script src="{~}codemirror/lib/codemirror.js"></script>
