@@ -16,9 +16,7 @@ class agent_pStudio_opener_ser extends agent_pStudio_opener
 {
     protected function composeReader($o)
     {
-        $a = @file_get_contents($this->realpath);
-
-        if (false !== $a)
+        if (is_file($this->realpath) && false !== $a = file_get_contents($this->realpath))
         {
             $b = @unserialize($a);
 

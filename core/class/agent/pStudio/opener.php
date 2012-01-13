@@ -58,7 +58,7 @@ class agent_pStudio_opener extends agent_pStudio_explorer
 
     protected function composeReader($o)
     {
-        if (false !== $a = @file_get_contents($this->realpath))
+        if (is_file($this->realpath) && false !== $a = file_get_contents($this->realpath))
         {
             if (preg_match('/[\x00-\x08\x0B\x0E-\x1A\x1C-\x1F]/', substr($a, 0, 512)))
             {

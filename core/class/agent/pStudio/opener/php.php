@@ -27,9 +27,7 @@ class agent_pStudio_opener_php extends agent_pStudio_opener
 
     protected function composeReader($o)
     {
-        $a = @file_get_contents($this->realpath);
-
-        if (false !== $a)
+        if (is_file($this->realpath) && false !== $a = file_get_contents($this->realpath))
         {
             $a && false !== strpos($a, "\r") && $a = strtr(str_replace("\r\n", "\n", $a), "\r", "\n");
             u::isUtf8($a) || $a = utf8_encode($a);
