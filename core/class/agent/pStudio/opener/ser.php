@@ -19,7 +19,10 @@ class agent_pStudio_opener_ser extends agent_pStudio_opener
 
             if (false !== $b || $a === serialize(false))
             {
-                $o->text = '<?php serialize(' . var_export($b, true) . ')';
+                $a = '<?php serialize(' . var_export($b, true) . ')';
+                u::isUtf8($a) || $a = u::utf8_encode($a);
+
+                $o->text = $a;
             }
         }
 

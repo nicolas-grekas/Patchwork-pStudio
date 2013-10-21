@@ -64,7 +64,7 @@ class agent_pStudio_opener extends agent_pStudio_explorer
             else
             {
                 $a && false !== strpos($a, "\r") && $a = strtr(str_replace("\r\n", "\n", $a), "\r", "\n");
-                u::isUtf8($a) || $a = utf8_encode($a);
+                u::isUtf8($a) || $a = u::utf8_encode($a);
                 $o->text = $a;
             }
         }

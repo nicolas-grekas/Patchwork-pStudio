@@ -21,7 +21,7 @@ class agent_pStudio_opener_jpeg extends agent_pStudio_opener_gif
         {
             $exif = exif_read_data($this->realpath);
 
-            E($exif);
+            E($exif); // TODO: send $exif data to the template
         }
 
         return $o;

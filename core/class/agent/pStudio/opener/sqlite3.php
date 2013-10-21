@@ -10,7 +10,7 @@
 
 // TODO: factorize with agent_pStudio_opener_sqlite
 
-class agent_pStudio_opener_sqlite extends agent_pStudio_opener
+class agent_pStudio_opener_sqlite3 extends agent_pStudio_opener
 {
     public $get = array(
         'path:c',
