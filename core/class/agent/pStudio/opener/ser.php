@@ -8,6 +8,7 @@
  * GNU General Public License v2.0 (http://gnu.org/licenses/gpl-2.0.txt).
  */
 
+use Patchwork\Utf8 as u;
 
 class agent_pStudio_opener_ser extends agent_pStudio_opener
 {
